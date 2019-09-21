@@ -1,3 +1,7 @@
+function getItem(argument) {
+	// body...
+}
+
 function addItem(argument) {
 	// body...
 }

@@ -1,4 +1,4 @@
-var todos = [
+export var todos = [
 {
 	id: 1,
 	value: "Take a coffee",
@@ -6,7 +6,7 @@ var todos = [
 },
 {
 	id: 2,
-	value: "Take a coffee",
+	value: "Take a meds",
 	done: true
 
 },
