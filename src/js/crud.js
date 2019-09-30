@@ -5,10 +5,10 @@ function getItem(argument) {
 	// body...
 }
 
-export function addItem(callback) {
+export function addItem(id, callback) {
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	var item = {
-		id: todos.length + 1,
+		id: id + 1,
 		value: document.forms["form"]["todo"].value,
 		done: false
 	}
@@ -16,12 +16,20 @@ export function addItem(callback) {
 	todos.unshift(item);
 	console.log(todos);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	callback(todos);
 	alert("Added");
+	callback();
 }
 
-function removeItem(argument) {
-	// body...
+export function removeItem(id, callback) {
+	var id = id.split(" | "); 
+	console.log(id[0]);
+	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+	todos.splice(todos.findIndex(item => item.id.id == id[0]), 1);
+//	todos.pop();
+	console.log(todos);
+	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+	alert("Deleted");
+	callback();
 }
 
 function updateItem(argument) {
