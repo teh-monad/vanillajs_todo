@@ -1,4 +1,4 @@
-import {addItem, removeItem} from './crud.js';
+import {addItem, removeItem, updateItem} from './crud.js';
 //import {todos} from './items.js';
 
 /*
@@ -7,19 +7,22 @@ add localstorage api;
 input tag for editing;
  */
 
-export var STORAGE_KEY = "es_todos"
-var TITLE = "VanillaJS TODO";
+export var STORAGE_KEY = "es_todos";
+
+var TITLE = "VanillaJS TODO",
+	del = document.getElementsByClassName("delete"),
+	update = document.getElementsByClassName("update"),
+	form = document.getElementById("form");
 
 const removeElements = (elms) => elms.forEach(el => el.remove());
-var classname = document.getElementsByClassName("delete");
 
 export function render(){
 	removeElements( document.querySelectorAll(".ulli") );
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	todos.forEach((item) => {
 		let div = document.createElement('div');
-		var btn = (item.done) ? "<button type=\"button\" class=\"btn done onerow\">done</button>"
-							  : "<button type=\"button\" class=\"btn undone onerow\">undone</button>";
+		var btn = (item.done) ? "<button type=\"button\" class=\"btn update done onerow\">done</button>"
+							  : "<button type=\"button\" class=\"btn update undone onerow\">undone</button>";
 		div.innerHTML =  btn +
 					  "<button type=\"button\" class=\"btn delete onerow\">delete</button>" +
 					  "<p class=\"onerow\">" + item.id + " | " + item.value + " | " + item.done +"</p>";
@@ -27,17 +30,24 @@ export function render(){
 	})
 }
 
-document.getElementById("form").onsubmit = function() {
-	var id = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]').length;
-	addItem(id ,render);
+form.onsubmit = function() {
+	addItem(render);
 };
 
 document.addEventListener("DOMContentLoaded", render());
-Array.from(classname).forEach(function(element) {
+Array.from(del).forEach(function(element) {
   element.addEventListener("click", function(e){
-  	//?
   	var id = e.target.firstChild.parentNode.nextElementSibling.firstChild.data
 	removeItem(id, render);
+	location.reload(); 
+	}); 
+});
+
+Array.from(update).forEach(function(element) {
+  element.addEventListener("click", function(e){
+  	//?
+  	var id = e.target.firstChild.parentNode.nextSibling.previousSibling.firstChild.data
+	updateItem(id, render);
 	location.reload(); 
 	}); 
 });

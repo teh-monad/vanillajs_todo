@@ -5,10 +5,10 @@ function getItem(argument) {
 	// body...
 }
 
-export function addItem(id, callback) {
+export function addItem(callback) {
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	var item = {
-		id: id + 1,
+		id: todos.length + 1,
 		value: document.forms["form"]["todo"].value,
 		done: false
 	}
@@ -22,9 +22,9 @@ export function addItem(id, callback) {
 
 export function removeItem(id, callback) {
 	var id = id.split(" | "); 
-	console.log(id[0]);
+	console.log(id[2]);
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-	todos.splice(todos.findIndex(item => item.id.id == id[0]), 1);
+	todos.splice(todos.findIndex(item => item.id == id[0]-1), 1);
 //	todos.pop();
 	console.log(todos);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
@@ -32,6 +32,21 @@ export function removeItem(id, callback) {
 	callback();
 }
 
-function updateItem(argument) {
-	// body...
+export function updateItem(id, callback) {
+	var id = id.split(" | ").toString(); 
+	var res = (id == "undone") ? id.replace("undone", "true") : id.replace("done", "false")
+	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+	//var res = id.replace("undone", "done");
+	//id to foreach
+	todos.forEach(function(record) {
+	    if (record.done == true ) {
+	        record.done = false;
+	    } else {
+	        record.done = true;	    	
+	    }
+	});
+	console.log(todos);
+	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+	alert("Updated");
+	callback();		
 }
