@@ -46,7 +46,7 @@ Array.from(del).forEach(function(element) {
 Array.from(update).forEach(function(element) {
   element.addEventListener("click", function(e){
   	//?
-  	var id = e.target.firstChild.parentNode.nextSibling.previousSibling.firstChild.data
+  	var id = e.target.parentElement.textContent
 	updateItem(id, render);
 	location.reload(); 
 	}); 

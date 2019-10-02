@@ -33,16 +33,23 @@ export function removeItem(id, callback) {
 }
 
 export function updateItem(id, callback) {
-	var id = id.split(" | ").toString(); 
-	var res = (id == "undone") ? id.replace("undone", "true") : id.replace("done", "false")
+	console.log(id);
+	var id = id.split(" | "); 
+	console.log(id[2]);
+	var regex = /\d+/g;
+	var matches = id[0].match(regex).toString();
+	console.log(matches);
+//	var test = id.toString();
+//	var res = (test == "undone") ? test.replace("undone", "true") : test.replace("done", "false")
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-	//var res = id.replace("undone", "done");
-	//id to foreach
 	todos.forEach(function(record) {
-	    if (record.done == true ) {
-	        record.done = false;
-	    } else {
+	    if (record.id == matches) {
+	    	if(record.done == true){
+	        	record.done = false;	    		
+	    	} 
+	    	else {
 	        record.done = true;	    	
+	    	}
 	    }
 	});
 	console.log(todos);
