@@ -26,6 +26,8 @@ export function removeItem(id, callback) {
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	todos.splice(todos.findIndex(item => item.id == id[0]-1), 1);
 //	todos.pop();
+//	todos.length+1
+//	store length in cookie
 	console.log(todos);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 	alert("Deleted");
