@@ -28,7 +28,9 @@ export function removeItem(id, callback) {
 //	todos.pop();
 //	todos.length+1
 //	store length in cookie
+ 	todos.length = todos.length + 1
 	console.log(todos);
+	Object.keys(todos).forEach((key) => (todos[key] == null) && delete todos[key]);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 	alert("Deleted");
 	callback();
