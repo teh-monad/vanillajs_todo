@@ -1,18 +1,24 @@
 //import {todos} from './items.js';
 import {render, STORAGE_KEY} from './app.js';
 
+const removeEmptyOrNull = (obj) => {
+	Object.keys(obj).forEach((k, value) => (obj[value] == null) && delete obj[value]);
+  return obj;
+}
+
 function getItem(argument) {
 	// body...
 }
 
-export function addItem(callback) {
-	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-	var item = {
+function addItem(callback) {
+	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
+	    item = {
 		id: todos.length + 1,
 		value: document.forms["form"]["todo"].value,
 		done: false
-	}
-	var oldTodos = todos
+	},
+	    oldTodos = todos
+
 	todos.unshift(item);
 	console.log(todos);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
@@ -20,32 +26,27 @@ export function addItem(callback) {
 	callback();
 }
 
-export function removeItem(id, callback) {
-	var id = id.split(" | "); 
-	console.log(id[2]);
-	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+function removeItem(id, callback) {
+	var id = id.split(" | "),
+	    todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
 	todos.splice(todos.findIndex(item => item.id == id[0]-1), 1);
-//	todos.pop();
-//	todos.length+1
-//	store length in cookie
- 	todos.length = todos.length + 1
+	console.log(id[2]);
+ 	todos = removeEmptyOrNull(todos)
+ 	//todos.length = todos.length + 1 // add null object based on length
 	console.log(todos);
-	Object.keys(todos).forEach((key) => (todos[key] == null) && delete todos[key]);
-	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+	//Object.keys(todos).forEach((k, value) => (todos[value] == null) && delete todos[value]);
+	localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 	alert("Deleted");
 	callback();
 }
 
-export function updateItem(id, callback) {
-	console.log(id);
-	var id = id.split(" | "); 
-	console.log(id[2]);
-	var regex = /\d+/g;
-	var matches = id[0].match(regex).toString();
-	console.log(matches);
-//	var test = id.toString();
-//	var res = (test == "undone") ? test.replace("undone", "true") : test.replace("done", "false")
-	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+function updateItem(id, callback) {
+	var id = id.split(" | "),
+		regex = /\d+/g,
+	    matches = id[0].match(regex).toString();
+	    todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+	
 	todos.forEach(function(record) {
 	    if (record.id == matches) {
 	    	if(record.done == true){
@@ -56,8 +57,9 @@ export function updateItem(id, callback) {
 	    	}
 	    }
 	});
-	console.log(todos);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 	alert("Updated");
 	callback();		
 }
+
+export {addItem, removeItem, updateItem}

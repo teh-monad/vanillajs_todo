@@ -7,7 +7,7 @@ add localstorage api;
 input tag for editing;
  */
 
-export var STORAGE_KEY = "es_todos";
+var STORAGE_KEY = "es_todos";
 
 var TITLE = "VanillaJS TODO",
 	del = document.getElementsByClassName("delete"),
@@ -16,7 +16,7 @@ var TITLE = "VanillaJS TODO",
 
 const removeElements = (elms) => elms.forEach(el => el.remove());
 
-export function render(){
+function render(){
 	removeElements( document.querySelectorAll(".ulli") );
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	todos.forEach((item) => {
@@ -51,3 +51,5 @@ Array.from(update).forEach(function(element) {
 	location.reload(); 
 	}); 
 });
+
+export {render, STORAGE_KEY}
