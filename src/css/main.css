@@ -1,24 +1,30 @@
 .app{
-  width: 500px;
-  height: 500px;
-  background-color: #1eebe0;
+  background-color: #a3aab5;
   margin: auto;
+  width: 600px;
+  -webkit-box-shadow: 10px 13px 6px 16px rgba(1,4,10,0.29);
+  -moz-box-shadow: 10px 13px 6px 16px rgba(1,4,10,0.29);
+  box-shadow: 10px 13px 6px 16px rgba(1,4,10,0.29);
 }
 
 html, body {
   height: 100%;
-  color: black;
   background: #1fa39d;
+  font-family: "Lucida Console", Monaco, monospace;
+  color: #fc4a03;
 }
 
 #form {
-  border-bottom: 10px solid black;
+  border-bottom: 15px solid white;
 }
 
 .ulli {
+  width: fit-content; 
+  height: fit-content; 
   margin-top: 10px;
   display: flex;
-
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .onerow {
