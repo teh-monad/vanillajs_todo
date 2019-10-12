@@ -1,15 +1,14 @@
 import {addItem, removeItem, updateItem} from './crud.js';
-//import {todos} from './items.js';
 
 /*
 add Promises;
-add localstorage api;
+add localstorage api; //?
 input tag for editing;
+some refactoring;
  */
 
-var STORAGE_KEY = "es_todos";
-
-var TITLE = "VanillaJS TODO",
+var STORAGE_KEY = "es_todos",
+	TITLE = "VanillaJS TODO",
 	del = document.getElementsByClassName("delete"),
 	update = document.getElementsByClassName("update"),
 	form = document.getElementById("form");

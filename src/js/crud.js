@@ -1,4 +1,3 @@
-//import {todos} from './items.js';
 import {render, STORAGE_KEY} from './app.js';
 
 const removeEmptyOrNull = (obj) => {
@@ -7,22 +6,22 @@ const removeEmptyOrNull = (obj) => {
 }
 
 function getItem(argument) {
-	// body...
+	return 0;
 }
 
 function addItem(callback) {
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
+		lnth = todos.length,
+		last_id = lnth ? Object.entries(todos[0])[0][1] : 0 ,
 	    item = {
-		id: todos.length + 1,
+		id: last_id + 1,
 		value: document.forms["form"]["todo"].value,
 		done: false
 	},
 	    oldTodos = todos
 
 	todos.unshift(item);
-	console.log(todos);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	alert("Added");
 	callback();
 }
 
@@ -30,14 +29,8 @@ function removeItem(id, callback) {
 	var id = id.split(" | "),
 	    todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
-	todos.splice(todos.findIndex(item => item.id == id[0]-1), 1);
-	console.log(id[2]);
- 	todos = removeEmptyOrNull(todos)
- 	//todos.length = todos.length + 1 // add null object based on length
-	console.log(todos);
-	//Object.keys(todos).forEach((k, value) => (todos[value] == null) && delete todos[value]);
+	todos.splice(todos.findIndex(item => item.id == id[0]), 1);
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	alert("Deleted");
 	callback();
 }
 
@@ -58,7 +51,6 @@ function updateItem(id, callback) {
 	    }
 	});
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	alert("Updated");
 	callback();		
 }
 
