@@ -15,7 +15,7 @@ var STORAGE_KEY = "es_todos",
 
 const removeElements = (elms) => elms.forEach(el => el.remove());
 
-function render(){
+function render(){ //div for logs;
 	removeElements( document.querySelectorAll(".ulli") );
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	todos.forEach((item) => {
@@ -34,11 +34,12 @@ form.onsubmit = function() {
 };
 
 document.addEventListener("DOMContentLoaded", render());
+
 Array.from(del).forEach(function(element) {
   element.addEventListener("click", function(e){
   	var id = e.target.firstChild.parentNode.nextElementSibling.firstChild.data
 	removeItem(id, render);
-	location.reload(); 
+	render() 
 	}); 
 });
 
@@ -47,7 +48,7 @@ Array.from(update).forEach(function(element) {
   	//?
   	var id = e.target.parentElement.textContent
 	updateItem(id, render);
-	location.reload(); 
+	render()
 	}); 
 });
 

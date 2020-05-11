@@ -1,15 +1,10 @@
 import {render, STORAGE_KEY} from './app.js';
 
-const removeEmptyOrNull = (obj) => {
-	Object.keys(obj).forEach((k, value) => (obj[value] == null) && delete obj[value]);
-  return obj;
-}
-
 function getItem(argument) {
 	return 0;
 }
 
-function addItem(callback) {
+function addItem(callback) { //check for same values;
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
 		lnth = todos.length,
 		last_id = lnth ? Object.entries(todos[0])[0][1] : 0 ,
