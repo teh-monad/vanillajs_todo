@@ -4,7 +4,7 @@ function getItem(argument) {
 	return 0;
 }
 
-function addItem(callback) { //check for same values;
+function addItem(render) { //check for same values;
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'),
 		lnth = todos.length,
 		last_id = lnth ? Object.entries(todos[0])[0][1] : 0 ,
@@ -17,19 +17,19 @@ function addItem(callback) { //check for same values;
 
 	todos.unshift(item);
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	callback();
+	render();
 }
 
-function removeItem(id, callback) {
+function removeItem(id, render) {
 	var id = id.split(" | "),
 	    todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
 	todos.splice(todos.findIndex(item => item.id == id[0]), 1);
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	callback();
+	render();
 }
 
-function updateItem(id, callback) {
+function updateItem(id, render) {
 	var id = id.split(" | "),
 		regex = /\d+/g,
 	    matches = id[0].match(regex).toString();
@@ -46,7 +46,7 @@ function updateItem(id, callback) {
 	    }
 	});
 	var todos = localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-	callback();		
+	render();		
 }
 
 export {addItem, removeItem, updateItem}

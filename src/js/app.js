@@ -39,7 +39,6 @@ Array.from(del).forEach(function(element) {
   element.addEventListener("click", function(e){
   	var id = e.target.firstChild.parentNode.nextElementSibling.firstChild.data
 	removeItem(id, render);
-	render() 
 	}); 
 });
 
@@ -48,7 +47,6 @@ Array.from(update).forEach(function(element) {
   	//?
   	var id = e.target.parentElement.textContent
 	updateItem(id, render);
-	render()
 	}); 
 });
 
