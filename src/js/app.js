@@ -15,7 +15,7 @@ var STORAGE_KEY = "es_todos",
 
 const removeElements = (elms) => elms.forEach(el => el.remove());
 
-function render(){ //div for logs;
+var render = () => { //div for logs;
 	removeElements( document.querySelectorAll(".ulli") );
 	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 	todos.forEach((item) => {
@@ -26,18 +26,18 @@ function render(){ //div for logs;
 					  "<button type=\"button\" class=\"btn delete onerow\">delete</button>" +
 					  "<p class=\"onerow\">" + item.id + " | " + item.value + " | " + item.done +"</p>";
 		document.querySelector('.app').appendChild(div).className = "ulli"; 
-	})
+	});
 }
 
 form.onsubmit = function() {
 	addItem(render);
 };
 
-document.addEventListener("DOMContentLoaded", render());
+document.addEventListener("load", render());
 
 Array.from(del).forEach(function(element) {
   element.addEventListener("click", function(e){
-  	var id = e.target.firstChild.parentNode.nextElementSibling.firstChild.data
+  	var id = e.target.firstChild.parentNode.nextElementSibling.firstChild.data;
 	removeItem(id, render);
 	}); 
 });
@@ -45,9 +45,9 @@ Array.from(del).forEach(function(element) {
 Array.from(update).forEach(function(element) {
   element.addEventListener("click", function(e){
   	//?
-  	var id = e.target.parentElement.textContent
+  	var id = e.target.parentElement.textContent;
 	updateItem(id, render);
 	}); 
 });
 
-export {render, STORAGE_KEY}
+export {render, STORAGE_KEY};
