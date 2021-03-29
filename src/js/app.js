@@ -1,53 +1,5 @@
-import {addItem, removeItem, updateItem} from './crud.js';
-
-/*
-add Promises;
-add localstorage api; //?
-input tag for editing;
-some refactoring;
- */
-
-var STORAGE_KEY = "es_todos",
-	TITLE = "VanillaJS TODO",
-	del = document.getElementsByClassName("delete"),
-	update = document.getElementsByClassName("update"),
-	form = document.getElementById("form");
-
-const removeElements = (elms) => elms.forEach(el => el.remove());
-
-var render = () => { //div for logs;
-	removeElements( document.querySelectorAll(".ulli") );
-	var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-	todos.forEach((item) => {
-		let div = document.createElement('div');
-		var btn = (item.done) ? "<button type=\"button\" class=\"btn update done onerow\">done</button>"
-							  : "<button type=\"button\" class=\"btn update undone onerow\">undone</button>";
-		div.innerHTML =  btn +
-					  "<button type=\"button\" class=\"btn delete onerow\">delete</button>" +
-					  "<p class=\"onerow\">" + item.id + " | " + item.value + " | " + item.done +"</p>";
-		document.querySelector('.app').appendChild(div).className = "ulli"; 
-	});
-}
-
-form.onsubmit = function() {
-	addItem(render);
-};
-
-document.addEventListener("load", render());
-
-Array.from(del).forEach(function(element) {
-  element.addEventListener("click", function(e){
-  	var id = e.target.firstChild.parentNode.nextElementSibling.firstChild.data;
-	removeItem(id, render);
-	}); 
-});
-
-Array.from(update).forEach(function(element) {
-  element.addEventListener("click", function(e){
-  	//?
-  	var id = e.target.parentElement.textContent;
-	updateItem(id, render);
-	}); 
-});
-
-export {render, STORAGE_KEY};
+var STORAGE_KEY="es_todos",TITLE="VanillaJS TODO",del=document.getElementsByClassName("delete"),update=document.getElementsByClassName("update"),form=document.getElementById("form"),removeElements=function(a){return a.forEach(function(b){return b.remove()})},render=function(){removeElements(document.querySelectorAll(".ulli"));JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]").forEach(function(a){var b=document.createElement("div");b.innerHTML=(a.done?'<button type="button" class="btn update done onerow">done</button>':
+'<button type="button" class="btn update undone onerow">undone</button>')+'<button type="button" class="btn delete onerow">delete</button><p class="onerow">'+a.id+" | "+a.value+" | "+a.done+"</p>";document.querySelector(".app").appendChild(b).className="ulli"})};form.onsubmit=function(){addItem(render)};document.addEventListener("load",render());Array.from(del).forEach(function(a){a.addEventListener("click",function(b){removeItem(b.target.firstChild.parentNode.nextElementSibling.firstChild.data,render)})});
+Array.from(update).forEach(function(a){a.addEventListener("click",function(b){updateItem(b.target.parentElement.textContent,render)})});
+var addItem=function(a){var b=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]"),c={id:(b.length?Object.entries(b[0])[0][1]:0)+1,value:document.forms.form.todo.value,done:!1};b.unshift(c);localStorage.setItem(STORAGE_KEY,JSON.stringify(b));a()},removeItem=function(a,b){a=a.split(" | ");var c=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");c.splice(c.findIndex(function(d){return d.id==a[0]}),1);localStorage.setItem(STORAGE_KEY,JSON.stringify(c));b();location.reload()},updateItem=function(a,b){a=
+a.split(" | ");var c=a[0].match(/\d+/g).toString(),d=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");d.forEach(function(e){e.id==c?1==e.done?e.done=!1:e.done=!0:0});localStorage.setItem(STORAGE_KEY,JSON.stringify(d));b();location.reload()};
